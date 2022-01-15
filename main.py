@@ -1,11 +1,11 @@
 """Discord bot with python"""
 
+from datetime import datetime
+from math import fabs
 import os
 import random
 import logging
-import sys
-import pprint
-import psutil
+from unicodedata import name
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -27,8 +27,7 @@ There are a number of utility commands being showcased here."""
 intents = discord.Intents.default()
 intents.members = True
 
-Client = commands.Bot(command_prefix="?", description=DESCRIPTION, intents=intents)
-
+Client = commands.Bot(command_prefix="", description=DESCRIPTION, intents=intents)
 
 
 @Client.event
@@ -36,12 +35,17 @@ async def on_ready():
     """When client is ready"""
     logging.info(f"{Client.user.name} is ready")
     print(f"{Client.user.name} is ready")
+    await Client.change_presence(
+        activity=discord.Activity(type=discord.ActivityType.listening, name="raphtalia")
+    )
+
 
 @Client.event
 async def on_connect():
     """When client is connected to discord"""
     logging.info(f"{Client.user.name} is connected to discord")
     print(f"{Client.user.name} is connected to discord")
+
 
 @Client.event
 async def on_disconnect():
@@ -102,35 +106,52 @@ async def _bot(ctx):
     """Is the bot cool?"""
     await ctx.send("Yes, the bot is cool.")
 
-@Client.command()
+
+@Client.command(name="tt")
 async def test(ctx):
-    pprint.pprint(ctx)
-    await ctx.send("Info envoyer des les logs")
+    print(Client.guilds)
+
 
 @Client.command()
-async def KillBot(_):
-    print("le bot va dead")
+async def KillBot(ctx):
+    await ctx.send(f"Pourquoi m'a tu tué {ctx.author.name}")
     await Client.close()
-    print('le bot est dead')
+
 
 @Client.command()
-async def restart(_):
-    print("Le bot va restart")
-    os.execv(sys.argv[0], sys.argv)
+async def aboutme(ctx):
+    def format_date(date_raw):
+        date_formater = datetime.strptime(str(date_raw), "%Y-%m-%d %H:%M:%S.%f")
+        date_formated = date_formater.strftime("le %d/%m/%Y à %Hh%M et %Ss")
+        return date_formated
+
+    author_created_at = format_date(ctx.author.created_at)
+    author_joined_at = format_date(ctx.author.joined_at)
+
+    role_list = ", ".join([str(r.name) for r in ctx.author.roles])
+
+    embed = discord.Embed(
+        title=f"Infos sur {ctx.author.name}",
+        description=f"Voici les infos sur {ctx.author.name}",
+    )
+    embed.set_thumbnail(url=ctx.author.avatar_url).add_field(
+        name="Dates :",
+        value=f"Date de creation : {author_created_at} \n Date de join au serv : {author_joined_at}",
+        inline=False,
+    ).add_field(
+        name="Roles sur ce serveur :",
+        value=f"{role_list}",
+        inline=False
+    ).add_field(
+        name="Id",
+        value=ctx.author.id,
+        inline=False
+    ).add_field(
+        name="Voice",
+        value=ctx.author.voice,
+        inline=False
+    )
+    await ctx.send(embed=embed)
+
 
 Client.run(os.environ.get("TOKEN"))
-
-def restart_program():
-    """Restarts the current program, with file objects and descriptors
-       cleanup
-    """
-
-    try:
-        p = psutil.Process(os.getpid())
-        for handler in p.get_open_files() + p.connections():
-            os.close(handler.fd)
-    except Exception as e:
-        logging.error(e)
-
-    python = sys.executable
-    os.execl(python, python, *sys.argv)
