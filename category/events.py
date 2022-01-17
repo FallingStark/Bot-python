@@ -30,6 +30,16 @@ class events(commands.Cog):
         logging.info(f"{self.bot.user.name} is disconnected to discord")
         print(f"{self.bot.user.name} is disconnected to discord")
 
+    @commands.Cog.listener()
+    async def on_message(self, ctx):
+        if (
+            "slt" in ctx.content
+            or "bonjour" in ctx.content
+            or "hello" in ctx.content
+            or "cc" in ctx.content
+        ):
+            await ctx.add_reaction("👋")
+
 
 def setup(bot):
     bot.add_cog(events(bot))
