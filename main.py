@@ -1,15 +1,11 @@
 """Discord bot with python"""
 
-from category import events
 from datetime import datetime
 import os
-import random
 import logging
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-
-from category import admin
 
 load_dotenv()
 
@@ -30,7 +26,6 @@ intents = discord.Intents.default()
 intents.members = True
 
 Client = commands.Bot(command_prefix="", description=DESCRIPTION, intents=intents)
-
 
 
 @Client.command(name="tt")
@@ -65,23 +60,18 @@ async def aboutme(ctx, member: discord.Member):
         value=f"Date de creation : {author_created_at} \n Date de join au serv : {author_joined_at}",
         inline=False,
     ).add_field(
-        name="Roles sur ce serveur :",
-        value=f"{role_list}",
-        inline=False
+        name="Roles sur ce serveur :", value=f"{role_list}", inline=False
     ).add_field(
-        name="Id",
-        value=member.id,
-        inline=False
+        name="Id", value=member.id, inline=False
     ).add_field(
-        name="Voice",
-        value=member.voice,
-        inline=False
+        name="Voice", value=member.voice, inline=False
     )
     await ctx.send(embed=embed)
 
-for file in os.listdir("./category"): # lists all the cog files inside the cog folder.
-    if file.endswith(".py"): # It gets all the cogs that ends with a ".py".
-        name = file[:-3] # It gets the name of the file removing the ".py"
-        Client.load_extension(f"category.{name}") # This loads the cog.
+
+for file in os.listdir("./category"):  # lists all the cog files inside the cog folder.
+    if file.endswith(".py"):  # It gets all the cogs that ends with a ".py".
+        name = file[:-3]  # It gets the name of the file removing the ".py"
+        Client.load_extension(f"category.{name}")  # This loads the cog.
 
 Client.run(os.environ.get("TOKEN"))

@@ -6,15 +6,18 @@ import logging
 class events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_ready(self):
         """When client is ready"""
         logging.info(f"{self.bot.user.name} is ready")
         print(f"{self.bot.user.name} is ready")
         await self.bot.change_presence(
-            activity=discord.Activity(type=discord.ActivityType.listening, name="raphtalia")
+            activity=discord.Activity(
+                type=discord.ActivityType.listening, name="raphtalia"
+            )
         )
+
     @commands.Cog.listener()
     async def on_connect(self):
         """When client is connected to discord"""

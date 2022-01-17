@@ -12,7 +12,7 @@ class admin_commands(commands.Cog):
     @commands.command(name="ar")
     async def add_role(self, ctx):
         print("j'ai adds des roles")
-    
+
     @commands.command(name="kick", pass_context=True)
     @has_permissions(manage_roles=True, ban_members=True)
     async def _kick(self, ctx, member: discord.Member):
@@ -21,7 +21,9 @@ class admin_commands(commands.Cog):
     @_kick.error
     async def kick_error(self, error, ctx):
         if isinstance(error, MissingPermissions):
-            text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+            text = "Sorry {}, you do not have permissions to do that!".format(
+                ctx.message.author
+            )
             await self.bot.send_message(ctx.message.channel, text)
         else:
             print("y'a un bleme")

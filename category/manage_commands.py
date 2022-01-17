@@ -26,7 +26,7 @@ class loading_commands(commands.Cog):
             return await ctx.send(e)
         logging.warn(f"'{name}' was unloaded")
         await ctx.send(f'"**{name}**" was unloaded')
-    
+
     @commands.command()
     async def load(self, ctx, *, name: str):
         logging.info(f"Loading : '{name}'")
