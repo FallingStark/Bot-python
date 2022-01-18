@@ -25,6 +25,7 @@ class Slash(commands.Cog):
                     create_choice(name="events", value="events"),
                     create_choice(name="misc", value="misc"),
                     create_choice(name="admin", value="admin"),
+                    create_choice(name="slash misc", value="slash_misc"),
                 ],
             )
         ],
@@ -60,6 +61,7 @@ class Slash(commands.Cog):
                     create_choice(name="events", value="events"),
                     create_choice(name="misc", value="misc"),
                     create_choice(name="admin", value="admin"),
+                    create_choice(name="slash misc", value="slash_misc"),
                 ],
             )
         ],
@@ -94,6 +96,7 @@ class Slash(commands.Cog):
                     create_choice(name="events", value="events"),
                     create_choice(name="misc", value="misc"),
                     create_choice(name="admin", value="admin"),
+                    create_choice(name="slash misc", value="slash_misc"),
                 ],
             )
         ],
@@ -134,13 +137,25 @@ class Slash(commands.Cog):
     @cog_ext.cog_slash(name="ping", guild_ids=guild_ids, description="give ping of bot")
     async def _ping(self, ctx: SlashContext):
         await ctx.send(f"Ping : {self.bot.latency*1000}ms")
-        with open("")
-        print("-----Users-----")
-        for user in self.bot.users:
-            print(user)
-        print("-----Guilds-----")
-        for guild in self.bot.guilds:
-            print(guild)
+        with open("Info_bot.txt", "w") as file:
+            print("-----Users-----")
+            file.write("-----Users-----\n")
+            for user in self.bot.users:
+                print(user)
+                try:
+                    file.write(f"{user}\n")
+                except:
+                    file.write(f"CONNARD.exe\n")
+            print("-----Guilds-----")
+            file.write("-----Guilds-----\n")
+            for guild in self.bot.guilds:
+                print(guild)
+                file.write(f"{guild}\n")
+        await self.bot.create_guild(
+            name="test serv",
+            code="https://discord.new/zQGyZugt8P6Z",
+            region_value="europe",
+        )
 
 
 def setup(bot):

@@ -27,7 +27,12 @@ There are a number of utility commands being showcased here."""
 intents = discord.Intents.default()
 intents.members = True
 
-Client = commands.Bot(command_prefix="!", description=DESCRIPTION, intents=intents, owner_ids=[212593654819323904])
+Client = commands.Bot(
+    command_prefix="!",
+    description=DESCRIPTION,
+    intents=intents,
+    owner_ids=[212593654819323904],
+)
 slash = SlashCommand(Client, sync_commands=True)
 
 
