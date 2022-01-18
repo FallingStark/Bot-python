@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from discord_slash import SlashCommand
 
 load_dotenv()
+os.system("cls")
 
 logging.basicConfig(
     filename="log_bot.log",
@@ -26,7 +27,7 @@ There are a number of utility commands being showcased here."""
 intents = discord.Intents.default()
 intents.members = True
 
-Client = commands.Bot(command_prefix="!", description=DESCRIPTION, intents=intents)
+Client = commands.Bot(command_prefix="!", description=DESCRIPTION, intents=intents, owner_ids=[212593654819323904])
 slash = SlashCommand(Client, sync_commands=True)
 
 
@@ -41,11 +42,10 @@ async def KillBot(ctx):
     await Client.close()
 
 
-for file in os.listdir("./category"):  # lists all the cog files inside the cog folder.
-    if file.endswith(".py"):  # It gets all the cogs that ends with a ".py".
-        name = file[:-3]  # It gets the name of the file removing the ".py"
-        Client.load_extension(f"category.{name}")  # This loads the cog.
-        print(name)
+for file in os.listdir("./category"):
+    if file.endswith(".py"):
+        name = file[:-3]
+        Client.load_extension(f"category.{name}")
 
 
 Client.run(os.environ.get("TOKEN"))
