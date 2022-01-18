@@ -51,7 +51,7 @@ class Slash_misc(commands.Cog):
             )
         ]
     )
-    async def hug(self, ctx: SlashContext, user: discord.Member):
+    async def wasted(self, ctx: SlashContext, user: discord.Member):
         list_gif = [
             "https://cdn.weeb.sh/images/B1VnoJFDZ.gif",
             "https://cdn.weeb.sh/images/B1qosktwb.gif",
@@ -77,7 +77,7 @@ class Slash_misc(commands.Cog):
             )
         ]
     )
-    async def hug(self, ctx: SlashContext, user: discord.Member):
+    async def pat(self, ctx: SlashContext, user: discord.Member):
         list_gif = [
             "https://cdn.weeb.sh/images/BkaRWA4CZ.gif",
             "https://cdn.weeb.sh/images/rkl1xJYDZ.gif",
