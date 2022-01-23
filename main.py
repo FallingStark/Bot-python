@@ -50,7 +50,8 @@ async def KillBot(ctx):
 for file in os.listdir("./category"):
     if file.endswith(".py"):
         name = file[:-3]
-        Client.load_extension(f"category.{name}")
+        if name != "stats":
+            Client.load_extension(f"category.{name}")
 
 
 Client.run(os.environ.get("TOKEN"))
